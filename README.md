@@ -119,11 +119,10 @@ Esto demuestra que:
 - Las clases `App\User` y `Database\Model\ProductModel` se cargan automáticamente sin `require` explícito.
 - Los métodos `getName()` y `getId()` se ejecutan correctamente.
 
-### Capturas de Pantalla (Simuladas)
+### Capturas de Pantalla
 
 Si ejecutas en terminal:
-- **Antes de `composer install`**: Error "Class 'App\User' not found".
-- **Después de `composer install`**: Salida correcta como arriba.
+![Login](public/img/prueba.png)
 
 ## 🧠 Conclusiones Técnicas
 
