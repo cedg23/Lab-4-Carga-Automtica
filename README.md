@@ -41,7 +41,7 @@ composer -V
 
 **1. Clonar o descargar el proyecto**
 ```bash
-git clone <https://github.com/cedg23/Lab-4-Carga-Automtica.git>
+git clone https://github.com/cedg23/Lab-4-Carga-Automtica.git
 cd autocarga
 ```
 
