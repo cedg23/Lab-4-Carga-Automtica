@@ -1,68 +1,100 @@
-<No puedo crear el archivo directamente, pero aquí tienes el contenido listo para copiar y pegar en un `README.txt` o `README.md`.
+Read [](file:///c%3A/wamp64/www/autocarga/composer.json)
 
----
+Read [](file:///c%3A/wamp64/www/autocarga/App/User.php)
 
-# Autocarga PHP - Proyecto de PSR-4 con Composer
+# Autocarga PHP - Demostración de PSR-4 con Composer
 
-![PHP](https://img.shields.io/badge/PHP-8.x-blue)  
-![Composer](https://img.shields.io/badge/Composer-Latest-green)  
+![PHP](https://img.shields.io/badge/PHP-8.x-blue)
+![Composer](https://img.shields.io/badge/Composer-Latest-green)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 ## 📌 Introducción
 
-**Autocarga PHP** es una demostración de uso de Composer y PSR-4 para cargar clases automáticamente en PHP.
+**Autocarga PHP** es un proyecto de demostración que implementa el estándar PSR-4 para la autocarga de clases en PHP utilizando Composer. Este proyecto ilustra cómo organizar el código en namespaces y cómo Composer facilita la carga automática de clases sin necesidad de incluir manualmente cada archivo.
 
-El proyecto incluye:
-- `App\User`
-- `Database\Model\ProductModel`
+El proyecto consta de clases simples en diferentes namespaces:
+- **App\User**: Una clase de usuario básica.
+- **Database\Model\ProductModel**: Un modelo de producto para simular interacciones con la base de datos.
 
-Composer se encarga de cargar las clases bajo demanda.
+Composer genera el autoloader basado en las configuraciones PSR-4, permitiendo que las clases se carguen bajo demanda (Lazy Loading).
 
 ## 🎯 Objetivo
 
-- Mostrar la configuración de PSR-4 en composer.json
-- Usar `composer install` y `composer dump-autoload`
-- Probar la carga automática con `prueba.php`
+- Demostrar la implementación de PSR-4 con Composer.
+- Organizar el código en namespaces y carpetas físicas.
+- Mostrar la carga automática de clases sin `require` manual.
+- Comprender los beneficios de la autocarga en proyectos PHP.
 
-## ⚙️ Requisitos
+## ⚙️ Requisitos Previos
 
-- PHP 8.0+
-- Composer
+Para ejecutar este proyecto, necesitas:
 
-## 🛠️ Instalación
+| Herramienta | Versión | Descripción |
+|-------------|---------|-------------|
+| PHP | 8.0+ | Lenguaje de programación |
+| Composer | Última | Gestor de dependencias y autoloader |
 
+## 🛠️ Verificación de Instalación
+
+```bash
+php -v
+composer -V
+```
+
+## 🚀 Instalación
+
+**1. Clonar o descargar el proyecto**
 ```bash
 git clone <URL_DEL_REPOSITORIO>
 cd autocarga
+```
+
+**2. Instalar dependencias y generar autoloader**
+```bash
 composer install
-# o
+# O si ya tienes las dependencias, regenera el autoloader:
 composer dump-autoload
 ```
 
+Esto genera el archivo `vendor/autoload.php` y configura la autocarga según composer.json.
+
 ## 📁 Estructura del Proyecto
+
+La estructura de archivos refleja la relación entre namespaces PSR-4 y las carpetas físicas:
 
 ```
 autocarga/
-├── composer.json
-├── prueba.php
+├── composer.json          # Configuración de Composer con PSR-4
+├── prueba.php             # Script de prueba para demostrar la autocarga
 ├── App/
-│   └── User.php
+│   └── User.php           # Clase App\User
 ├── Database/
 │   └── Model/
-│       └── ProductModel.php
+│       └── ProductModel.php  # Clase Database\Model\ProductModel
 └── vendor/
-    ├── autoload.php
-    └── composer/
+    ├── autoload.php       # Autoloader generado por Composer
+    └── composer/          # Archivos internos de Composer
 ```
 
-## 📌 Relación Namespace ↔ Carpeta
+### Relación Namespaces y Carpetas
 
-- `App\` → `App/`
-- `Database\Model\` → `Database/Model/`
+- **Namespace `App\\`** → Carpeta `App/`
+  - Ejemplo: `App\User` se encuentra en `App/User.php`
 
-## ▶️ Prueba de Ejecución
+- **Namespace `Database\Model\\`** → Carpeta `Database/Model/`
+  - Ejemplo: `Database\Model\ProductModel` se encuentra en `Database/Model/ProductModel.php`
 
-Archivo `prueba.php`:
+Esto sigue el estándar PSR-4, donde el namespace raíz mapea a la carpeta base, y las subcarpetas corresponden a subnamespaces.
+
+## ▶️ Pruebas de Ejecución
+
+Para verificar que la autocarga funciona correctamente, ejecuta el script `prueba.php`:
+
+```bash
+php prueba.php
+```
+
+### Código de Prueba
 
 ```php
 <?php
@@ -80,41 +112,49 @@ $product = new ProductModel();
 echo $product->getId();
 ```
 
-Ejecuta:
-
-```bash
-php prueba.php
-```
-
-Salida esperada:
+### Salida Esperada
 
 ```
 Dave
 123
 ```
 
-## 📝 Conclusiones Técnicas
+Esto demuestra que:
+- Las clases `App\User` y `Database\Model\ProductModel` se cargan automáticamente sin `require` explícito.
+- Los métodos `getName()` y `getId()` se ejecutan correctamente.
+
+### Capturas de Pantalla (Simuladas)
+
+Si ejecutas en terminal:
+- **Antes de `composer install`**: Error "Class 'App\User' not found".
+- **Después de `composer install`**: Salida correcta como arriba.
+
+## 🧠 Conclusiones Técnicas
 
 ### 1. Mantenibilidad
-Usar PSR-4 permite agregar nuevas clases sin cambiar archivos de configuración global. Solo se crea la clase en la carpeta correspondiente y Composer la carga.
+La implementación de PSR-4 con Composer facilita agregar nuevas clases sin modificar archivos de configuración globales. Simplemente crea la clase en la carpeta correspondiente al namespace, y Composer la detecta automáticamente al regenerar el autoloader con `composer dump-autoload`. Esto reduce errores y acelera el desarrollo colaborativo.
 
-### 2. Eficiencia de memoria
-Composer carga clases cuando se necesitan, en lugar de incluir todos los archivos al inicio. Esto mejora el rendimiento en aplicaciones grandes.
+### 2. Eficiencia de Memoria
+El Lazy Loading permite cargar clases solo cuando se necesitan, optimizando el uso de memoria en el servidor. En lugar de incluir todos los archivos PHP al inicio, Composer carga las clases bajo demanda, mejorando el rendimiento en aplicaciones grandes con muchas clases no utilizadas en cada solicitud.
 
 ### 3. Estandarización
-PSR-4 hace que la estructura del código sea clara y uniforme, lo cual facilita el trabajo en equipo y evita confusiones.
+Seguir PSR-4 asegura consistencia en la estructura del proyecto, facilitando el trabajo colaborativo. Desarrolladores pueden predecir la ubicación de clases basándose en el namespace, reduciendo conflictos y mejorando la legibilidad del código. Además, es compatible con herramientas y frameworks PHP modernos.
 
-## 📌 .gitignore recomendado
+## 📚 Referencias y Documentación
+- [Documentación de Composer](https://getcomposer.org/doc/)
+- [PSR-4 Autoloading Standard](https://www.php-fig.org/psr/psr-4/)
+- [Documentación de PHP sobre Namespaces](https://www.php.net/manual/en/language.namespaces.php)
 
-```
-/vendor/
-composer.lock
-```
+## 📅 Información del Proyecto
+- Fecha de desarrollo: Mayo 2026
+- Versión: 1.0.0
+- Estado: Completo
 
-## 📚 Referencias
+## 👨‍💻 Información del Desarrollador
+Este proyecto ha sido desarrollado por:
 
-- https://getcomposer.org/doc/
-- https://www.php-fig.org/psr/psr-4/
-- https://www.php.net/manual/es/language.namespaces.php
-
----
+- Nombre: Carlos Díaz
+- Correo: carlos.diaz10@utp.ac.pa
+- Curso: Desarrollo de Software VII
+- Instructor: Irina Fong
+- Institución: Universidad Tecnológica de Panamá (UTP)
