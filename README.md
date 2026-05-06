@@ -1,7 +1,3 @@
-Read [](file:///c%3A/wamp64/www/autocarga/composer.json)
-
-Read [](file:///c%3A/wamp64/www/autocarga/App/User.php)
-
 # Autocarga PHP - Demostración de PSR-4 con Composer
 
 ![PHP](https://img.shields.io/badge/PHP-8.x-blue)
